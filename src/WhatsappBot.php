@@ -34,8 +34,9 @@ class WhatsappBot
         $this->apiUrl         = rtrim($config['api_url'] ?? 'https://graph.facebook.com/v20.0', '/');
         $this->timeout        = (int) ($config['timeout'] ?? 30);
         $this->connectTimeout = (int) ($config['connect_timeout'] ?? 10);
-        $this->retryTimes     = (int) ($config['retry']['times'] ?? 3);
-        $this->retrySleepMs   = (int) ($config['retry']['sleep_ms'] ?? 1000);
+        $retry                = $config['retry'] ?? [];
+        $this->retryTimes     = (int) ($retry['times'] ?? 3);
+        $this->retrySleepMs   = (int) ($retry['sleep_ms'] ?? 1000);
         $this->proxy          = $config['proxy'] ?? null;
         $this->logging        = (bool) ($config['logging'] ?? false);
     }
@@ -260,7 +261,7 @@ class WhatsappBot
     {
         $attempt = 0;
 
-        do {
+        while (true) {
             $http = Http::timeout($this->timeout)
                 ->connectTimeout($this->connectTimeout)
                 ->withToken($this->accessToken);
@@ -285,7 +286,7 @@ class WhatsappBot
             $description = (string) ($error['message'] ?? 'Unknown WhatsApp API error');
             $subCode     = isset($error['error_subcode']) ? (int) $error['error_subcode'] : null;
 
-            // Retry on rate limit (HTTP 429)
+            // Retry on rate limit (HTTP 429) up to $retryTimes additional attempts
             if ($errorCode === 429 && $attempt < $this->retryTimes) {
                 usleep($this->retrySleepMs * 1_000);
                 $attempt++;
@@ -294,9 +295,7 @@ class WhatsappBot
             }
 
             throw new WhatsappApiException($description, $errorCode, $subCode);
-        } while ($attempt <= $this->retryTimes);
-
-        throw new WhatsappApiException('Max retry attempts reached.', 429);
+        }
     }
 
     /**

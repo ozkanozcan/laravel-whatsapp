@@ -11,6 +11,18 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ---
 
+## [1.1.0] — 2026-08-11
+
+### Fixed
+- `WhatsappBot` constructor: `$config['retry']` key yoksa `null['times']` erişimi fatal error veriyordu; `$retry = $config['retry'] ?? []` ile null-safety sağlandı
+- `WhatsappBot::request()`: `do...while` döngüsündeki son `throw` satırı unreachable code'du; döngü `while(true)` + `break`-less pattern'e refactor edildi
+
+### Changed
+- `composer.json`: `minimum-stability` `dev` → `stable` olarak güncellendi (library paketi için doğru değer)
+- CI matrix: Laravel `13.*` eklendi (PHP 8.2 / 8.3 / 8.4 × Laravel 10 / 11 / 12 / 13 → 12 kombinasyon)
+
+---
+
 ## [1.0.0] — 2024-08-11
 
 ### Added
@@ -41,5 +53,6 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - GitHub Actions CI: PHP 8.2 / 8.3 / 8.4 × Laravel 10 / 11 / 12 matrix
 - Full PHPUnit test suite (WhatsappBotTest, WhatsappMessageTest, WhatsappChannelTest)
 
-[Unreleased]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ozkanozcan/laravel-whatsapp/releases/tag/v1.0.0
