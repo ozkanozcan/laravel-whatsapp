@@ -11,6 +11,16 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ---
 
+## [1.1.1] — 2026-08-11
+
+### Fixed
+- CI & Composer: `orchestra/testbench` sürüm kısıtı `^8.0|^9.0|^10.0|^11.0` olarak genişletildi (Laravel 13 desteği için `^11.0` eklendi)
+- CI & Composer: `phpunit/phpunit` sürüm kısıtına `^13.0` desteği eklendi
+- CI & Composer: Packagist security advisories engeli (`policy.advisories.block: false` ve `COMPOSER_POLICY_ADVISORIES_BLOCK: 0`) aşılarak Laravel 10/11 matrix testlerinin kurulabilmesi sağlandı
+- CI matrix: Laravel 13 PHP 8.3+ gerektirdiğinden `php: '8.2'` × `laravel: '13.*'` kombinasyonu matristen hariç tutuldu (`exclude`)
+
+---
+
 ## [1.1.0] — 2026-08-11
 
 ### Fixed
@@ -53,6 +63,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - GitHub Actions CI: PHP 8.2 / 8.3 / 8.4 × Laravel 10 / 11 / 12 matrix
 - Full PHPUnit test suite (WhatsappBotTest, WhatsappMessageTest, WhatsappChannelTest)
 
-[Unreleased]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/ozkanozcan/laravel-whatsapp/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ozkanozcan/laravel-whatsapp/releases/tag/v1.0.0
